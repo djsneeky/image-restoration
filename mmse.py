@@ -33,18 +33,18 @@ def filter_image(desired_img, input_img, output_img_name):
     theta_star = np.linalg.inv(Rzz).dot(rzy)
     print(theta_star.reshape(7, 7))
 
-    # # Apply the optimal filter
-    # print("applying filter to generate " + output_img_name)
-    # filtered_input_img_data = np.zeros_like(np.array(input_img))
-    # for y in range(input_img.height):
-    #     for x in range(input_img.width):
-    #         zs, _ = compute_zs_ys(input_img, x, y, window_size)
-    #         filtered_value = np.dot(zs.astype(np.float64), theta_star)
-    #         filtered_input_img_data[y, x] = np.clip(filtered_value, 0, 255)  # Clip to ensure valid pixel values
+    # Apply the optimal filter
+    print("applying filter to generate " + output_img_name)
+    filtered_input_img_data = np.zeros_like(np.array(input_img))
+    for y in range(input_img.height):
+        for x in range(input_img.width):
+            zs, _ = compute_zs_ys(input_img, x, y, window_size)
+            filtered_value = np.dot(zs.astype(np.float64), theta_star)
+            filtered_input_img_data[y, x] = np.clip(filtered_value, 0, 255)  # Clip to ensure valid pixel values
     
-    # filtered_input_img = Image.fromarray(filtered_input_img_data.astype(np.uint8))
-    # filtered_input_img.save('images/' + output_img_name + '.tif')
-    # filtered_input_img.save('images/' + output_img_name + '.png')
+    filtered_input_img = Image.fromarray(filtered_input_img_data.astype(np.uint8))
+    filtered_input_img.save('images/' + output_img_name + '.tif')
+    filtered_input_img.save('images/' + output_img_name + '.png')
 
 def main():
     img_g = Image.open('images/img14g.tif').convert('L')
